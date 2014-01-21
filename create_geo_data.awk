@@ -1,6 +1,6 @@
 # create_geo_data.awk
 # purpose: to create random lat/lon values 
-# usage: gawk -v rows=300 -v format=d -f create_geo_data.awk
+# usage: gawk -v format=d -f create_geo_data.awk data_file
 # parameters:
 #     rows: how many rows you want. (Default is 100) 
 
@@ -8,7 +8,12 @@ function flip(){
   return  int(rand() * 2); 
 }
 
-function randomDegree(range){
+function randomDegree(range, axis){
+  direction["lat"][1] = "N";
+  direction["lat"][-1] = "S";
+  direction["lon"][1] = "E";
+  direction["lon"][-1] = "W";
+  
   degree = int(rand() * range); 
   decimal = rand(); 
   sign = 1;
@@ -19,7 +24,7 @@ function randomDegree(range){
   
   switch (format){
     case "dmd":
-      result = (sign * degree) " " (decimal * 60);
+      result = degree " " (decimal * 60) "" direction[axis][sign];
       break;
     default:
       result = sign * degree + decimal;
@@ -29,18 +34,13 @@ function randomDegree(range){
 }
 
 function randomLat(){
-  return randomDegree(90); 
+  return randomDegree(90, "lat"); 
 }
 
 function randomLon(){
-  return randomDegree(180); 
+  return randomDegree(180, "lon"); 
 }
 
-BEGIN {
-  if (rows == ""){ rows =  100; }
-  if (format == ""){ format = "decimal"; }
- 
-  for(i = 0; i < rows; i++) {
-    print randomLat() "," randomLon();
-  }  
+{
+    print $0 "," randomLat() "," randomLon();
 }

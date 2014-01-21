@@ -1,4 +1,4 @@
 BEGIN { FS = "," }
 {
-  print "UPDATE team SET  leader = " $2 " WHERE team_id = " $1 ";"
+   print "UPDATE incidents SET  lat = " $8 ", lon = " $9  " WHERE id = " $1 ";";
 }
