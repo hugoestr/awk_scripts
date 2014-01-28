@@ -2,7 +2,7 @@
 # purpose: to create radom values 
 # usage: gawk -v digits=2 -v rows=300 -v columns=5 -f create_test_data.awk
 # parameters:
-#     digit: the number of digits we number of decimal point shifts to the rightwe desire
+#     digit: the number of digits we want to shift the decimal point shifts to the right
 #     rows: number of rows we can to create
 #     columns: number of random columns we desire
 #     neg: include negative numbers 
